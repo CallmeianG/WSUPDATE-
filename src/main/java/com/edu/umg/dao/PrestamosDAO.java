@@ -46,7 +46,7 @@ public class PrestamosDAO {
         return prestamos;
     }
        
-      public void updateAutores(Prestamos prestamos) {
+      public void updatePrestamos(Prestamos prestamos) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         session.update(prestamos);

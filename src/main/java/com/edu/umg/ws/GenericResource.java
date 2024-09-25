@@ -139,7 +139,7 @@ public class GenericResource {
         Autores existingAutores = autoresDAO.getAutoresById(id);
         if (existingAutores != null) {
             prestamos.setId(id); // Ensure the ID is preserved
-            prestamosDAO.updateAutores(prestamos);
+            prestamosDAO.updatePrestamos(prestamos);
             return Response.ok(prestamos).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
