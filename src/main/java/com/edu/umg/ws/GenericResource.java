@@ -45,8 +45,8 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateStudent(@PathParam("id") Long id, Tipos tipos) {
-        Tipos existingStudent = tiposDAO.getTIposById(id);
-        if (existingStudent != null) {
+        Tipos existingTipos = tiposDAO.getTIposById(id);
+        if (existingTipos != null) {
             tipos.setId(id); // Ensure the ID is preserved
             tiposDAO.updateTipos(tipos);
             return Response.ok(tipos).build();
@@ -91,8 +91,8 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateEstudiantes(@PathParam("id") Long id, Estudiantes estudiantes) {
-        Autores existingAutores = autoresDAO.getAutoresById(id);
-        if (existingAutores != null) {
+        Estudiantes existingEstudiantes = estudiantesDAO.getEstudiantesById(id);
+        if (existingEstudiantes != null) {
             estudiantes.setId(id); // Ensure the ID is preserved
             estudiantesDAO.updateAutores(estudiantes);
             return Response.ok(estudiantes).build();
@@ -114,8 +114,8 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateEstudiantes(@PathParam("id") Long id, Libros libros) {
-        Autores existingAutores = autoresDAO.getAutoresById(id);
-        if (existingAutores != null) {
+        Libros existingLibros = librosDAO.getLibrosById(id);
+        if (existingLibros != null) {
             libros.setId(id); // Ensure the ID is preserved
             librosDAO.updateLibros(libros);
             return Response.ok(libros).build();
@@ -136,8 +136,8 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePrestamos(@PathParam("id") Long id, Prestamos prestamos) {
-        Autores existingAutores = autoresDAO.getAutoresById(id);
-        if (existingAutores != null) {
+        Prestamos existingPrestamos = prestamosDAO.getPrestamosById(id);
+        if (existingPrestamos != null) {
             prestamos.setId(id); // Ensure the ID is preserved
             prestamosDAO.updatePrestamos(prestamos);
             return Response.ok(prestamos).build();
