@@ -1,16 +1,18 @@
 package com.edu.umg.ws;
 
 
-import com.edu.umg.dao.AutoresDAO;
-import com.edu.umg.dao.TiposDAO;
-import com.edu.umg.dao.EstudiantesDAO;
-import com.edu.umg.dao.LibrosDAO;
-import com.edu.umg.dao.PrestamosDAO;
-import com.edu.umg.entities.Prestamos;
-import com.edu.umg.entities.Autores;
-import com.edu.umg.entities.Estudiantes;
-import com.edu.umg.entities.Libros;
-import com.edu.umg.entities.Tipos;
+import com.edu.umg.DAO.AutorDAO;
+import com.edu.umg.DAO.EstudianteDAO;
+import com.edu.umg.DAO.LibroDAO;
+import com.edu.umg.DAO.PrestamosDAO;
+import com.edu.umg.DAO.TiposDAO;
+import com.edu.umg.Entity.Autor;
+import com.edu.umg.Entity.Estudiante;
+import com.edu.umg.Entity.Libro;
+import com.edu.umg.Entity.Prestamos;
+import com.edu.umg.Entity.Tipos;
+
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -25,9 +27,9 @@ public class GenericResource {
     private UriInfo context;
     
     private TiposDAO tiposDAO = new TiposDAO();
-    private AutoresDAO autoresDAO = new AutoresDAO();
-    private EstudiantesDAO estudiantesDAO = new EstudiantesDAO();
-    private LibrosDAO librosDAO = new LibrosDAO();
+    private AutorDAO autorDAO = new AutorDAO();
+    private EstudianteDAO estudianteDAO = new EstudianteDAO();
+    private LibroDAO librosDAO = new LibroDAO();
     private PrestamosDAO prestamosDAO = new PrestamosDAO();
     
     public GenericResource() {
@@ -37,18 +39,18 @@ public class GenericResource {
     @Path("Tipos")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tipos> getTiposes() {
-        return tiposDAO.getAllTipos();
+        return tiposDAO.getAll();
     }
 
     @PUT
     @Path("/Tipos/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateStudent(@PathParam("id") Long id, Tipos tipos) {
-        Tipos existingTipos = tiposDAO.getTIposById(id);
+    public Response updateStudent(@PathParam("id") int id, Tipos tipos) {
+        Tipos existingTipos = tiposDAO.getById(id);
         if (existingTipos != null) {
             tipos.setId(id); // Ensure the ID is preserved
-            tiposDAO.updateTipos(tipos);
+            tiposDAO.update(tipos);
             return Response.ok(tipos).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -58,19 +60,19 @@ public class GenericResource {
     @GET
     @Path("Autores")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Autores> getAutoreses() {
-        return autoresDAO.getAllAutores();
+    public List<Autor> getAutoreses() {
+        return autorDAO.getAll();
     }
     
     @PUT
     @Path("/Autores/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateAutores(@PathParam("id") Long id, Autores autores) {
-        Autores existingAutores = autoresDAO.getAutoresById(id);
+    public Response updateAutores(@PathParam("id") int id, Autor autores) {
+        Autor existingAutores = autorDAO.getById(id);
         if (existingAutores != null) {
             autores.setId(id); // Ensure the ID is preserved
-            autoresDAO.updateAutores(autores);
+            autorDAO.update(autores);
             return Response.ok(autores).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -81,8 +83,8 @@ public class GenericResource {
     @GET
     @Path("Estudiantes")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Estudiantes> getEstudiantes() {
-        return estudiantesDAO.getAllEstudiantes();
+    public List<Estudiante> getEstudiantes() {
+        return estudianteDAO.getAll();
     }
     
     
@@ -90,11 +92,11 @@ public class GenericResource {
     @Path("/Estudiantes/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEstudiantes(@PathParam("id") Long id, Estudiantes estudiantes) {
-        Estudiantes existingEstudiantes = estudiantesDAO.getEstudiantesById(id);
+    public Response updateEstudiantes(@PathParam("id") int id, Estudiante estudiantes) {
+        Estudiante existingEstudiantes = estudianteDAO.getById(id);
         if (existingEstudiantes != null) {
             estudiantes.setId(id); // Ensure the ID is preserved
-            estudiantesDAO.updateAutores(estudiantes);
+            estudianteDAO.update(estudiantes);
             return Response.ok(estudiantes).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -105,30 +107,30 @@ public class GenericResource {
     @GET
     @Path("Libros")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Libros> getLibros() {
-        return librosDAO.getAllLibros();
+    public List<Libro> getLibros() {
+        return librosDAO.getAll();
     }
     
     @PUT
     @Path("/Libros/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateEstudiantes(@PathParam("id") Long id, Libros libros) {
-        Libros existingLibros = librosDAO.getLibrosById(id);
+    public Response updateEstudiantes(@PathParam("id") long id, Libro libros) {
+        Libro existingLibros = librosDAO.getById(id);
         if (existingLibros != null) {
             libros.setId(id); // Ensure the ID is preserved
-            librosDAO.updateLibros(libros);
+            librosDAO.update(libros);
             return Response.ok(libros).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
     
-    @GET
+  @GET
     @Path("Prestamos")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Prestamos> getLPrestamos() {
-        return prestamosDAO.getAllPrestamosList();
+    public List<Prestamos> getPrestamos() {
+        return prestamosDAO.getAllPrestamos();
     }
     
     @PUT
@@ -136,10 +138,10 @@ public class GenericResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePrestamos(@PathParam("id") Long id, Prestamos prestamos) {
-        Prestamos existingPrestamos = prestamosDAO.getPrestamosById(id);
+        Prestamos existingPrestamos = prestamosDAO.getPrestamoById(id);
         if (existingPrestamos != null) {
             prestamos.setId(id); // Ensure the ID is preserved
-            prestamosDAO.updatePrestamos(prestamos);
+            prestamosDAO.updatePrestamo(prestamos);
             return Response.ok(prestamos).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
