@@ -5,7 +5,11 @@ import com.edu.umg.controller.LibroController;
 import com.edu.umg.controller.PrestamoController;
 import com.edu.umg.controller.TipoController;
 import com.edu.umg.controller.UsuarioController;
+import com.edu.umg.controller.PersonalController;
+import com.edu.umg.controller.PuestoController;
 
+import com.edu.umg.model.Personal;
+import com.edu.umg.model.Puesto;
 import com.edu.umg.model.Autor;
 import com.edu.umg.model.Libro;
 import com.edu.umg.model.Prestamo;
@@ -29,6 +33,8 @@ public class GenericResource {
     private PrestamoController PrestamoCR = new PrestamoController();
     private TipoController TiporCR = new TipoController();
     private UsuarioController UsuarioCR = new UsuarioController();
+    private PersonalController PersonalCR = new PersonalController();
+    private PuestoController PuestoCR = new PuestoController();
     
     public GenericResource() {
     }
@@ -109,6 +115,36 @@ public class GenericResource {
             prestamos.setId_prestamo(id); // Ensure the ID is preserved
             PrestamoCR.updatePrestamo(prestamos);
             return Response.ok(prestamos).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    
+    @PUT
+    @Path("/Personal/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePersonal(@PathParam("id") int id, Personal personal) {
+        Personal existingPersonal = PersonalCR.getPersonalById(id);
+        if (existingPersonal != null) {
+            personal.setId_personal(id); // Ensure the ID is preserved
+            PersonalCR.updatePersonal(personal);
+            return Response.ok(personal).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+    
+    @PUT
+    @Path("/Puesto/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePersonal(@PathParam("id") int id, Puesto puesto) {
+        Puesto existingPuesto = PuestoCR.getPuestoById(id);
+        if (existingPuesto != null) {
+            puesto.setId_puesto(id); // Ensure the ID is preserved
+            PuestoCR.updatePuesto(puesto);
+            return Response.ok(puesto).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
